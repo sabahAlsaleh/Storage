@@ -1,0 +1,10 @@
+@model Storage.Models.Product
+<dl class="detail-grid">
+<div class=""><dt>Name</dt><dd>@Model.Name</dd></div>
+<div class=""><dt>Price</dt><dd>@Model.Price.ToString("N0")</dd></div>
+<div class=""><dt>Order Date</dt><dd>@Model.Orderdate.ToString("dd MMM yyyy")</dd></div>
+<div class=""><dt>Category</dt><dd>@Model.Category</dd></div>
+<div class=""><dt>Shelf</dt><dd>@Model.Shelf</dd></div>
+<div class=""><dt>Quantity</dt><dd>@Model.Count.ToString("N0")</dd></div>
+<div class="detail-description"><dt>Description</dt><dd>@Model.Description</dd></div>
+</dl>

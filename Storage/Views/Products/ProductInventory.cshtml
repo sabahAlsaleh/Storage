@@ -1,60 +1,13 @@
-﻿@model IEnumerable<Storage.Models.ProductViewModel>
-
-@{
-    ViewData["Title"] = "ProductInventory";
+@model IEnumerable<Storage.Models.ProductViewModel>
+@{ ViewData["Title"] = "Inventory Report"; }
+<div class="page-heading"><div><p class="eyebrow">INVENTORY OVERVIEW</p><h1>Inventory Report</h1><p class="page-intro">Review product quantities and inventory values.</p></div><a class="btn btn-outline-primary" asp-action="Create">Add Product</a></div>
+<section class="panel filter-panel" aria-label="Filter inventory"><form asp-action="FilterByCategory" method="get" class="filter-form">
+<div class="filter-field"><label for="category" class="form-label">Category</label><input type="text" id="category" name="category" value="@Context.Request.Query["category"]" class="form-control" placeholder="Enter category" aria-describedby="category-help" /><div id="category-help" class="form-text">Enter the exact category name.</div></div>
+<div class="filter-actions"><button type="submit" class="btn btn-primary">Apply Filter</button><a class="btn btn-outline-secondary" asp-action="ProductInventory">Show All</a></div></form></section>
+@if (!Model.Any()) {
+<section class="panel empty-state"><h2>No products to display</h2><p>No products match this category, or your inventory is empty.</p><a asp-action="ProductInventory">Show all inventory</a></section>
+} else {
+<div class="panel report-panel"><div class="table-responsive" role="region" aria-label="Inventory values; scroll horizontally on small screens" tabindex="0"><table class="table report-table"><caption class="visually-hidden">Inventory value equals price multiplied by quantity for each product.</caption>
+<thead><tr><th scope="col">Product</th><th scope="col" class="numeric">Price</th><th scope="col" class="numeric">Quantity</th><th scope="col" class="numeric">Inventory Value</th></tr></thead>
+<tbody>@foreach (var item in Model) {<tr><td class="product-name">@item.Name</td><td class="numeric">@item.Price.ToString("N0")</td><td class="numeric">@item.Count.ToString("N0")</td><td class="numeric inventory-value">@item.InventoryValue.ToString("N0")</td></tr>}</tbody></table></div></div>
 }
-
-<h1>ProductInventory</h1>
-<form asp-action="FilterByCategory" method="get" class="form-inline mb-3">
-    <div class="form-group">
-        <label for="category" class="mr-2">Category:</label>
-        <input type="text" id="category" name="category" class="form-control mr-2" placeholder="Enter category" />
-    </div>
-    <button type="submit" class="btn btn-primary">Search</button>
-</form>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Count)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.InventoryValue)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-
-
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Count)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.InventoryValue)
-            </td>
-           
-        </tr>
-}
-    </tbody>
-</table>

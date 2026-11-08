@@ -1,71 +1,27 @@
-﻿@model IEnumerable<Storage.Models.Product>
-
-@{
-    ViewData["Title"] = "Index";
+@model IEnumerable<Storage.Models.Product>
+@{ ViewData["Title"] = "Products"; }
+<div class="page-heading"><div><p class="eyebrow">YOUR INVENTORY</p><h1>Products</h1><p class="page-intro">Manage your products and stock information.</p></div><a class="btn btn-primary" asp-action="Create"><span aria-hidden="true">+ </span>Add Product</a></div>
+@if (!Model.Any()) {
+<section class="panel empty-state"><h2>No products yet</h2><p>Add your first product to start managing your inventory.</p><a class="btn btn-primary" asp-action="Create">Add Product</a></section>
+} else {
+<div class="panel product-list"><table class="table product-table" role="table"><caption class="visually-hidden">Products and available actions</caption><thead role="rowgroup"><tr role="row">
+<th scope="col" role="columnheader" class="">Product</th>
+<th scope="col" role="columnheader" class="numeric">Price</th>
+<th scope="col" role="columnheader" class="">Order Date</th>
+<th scope="col" role="columnheader" class="">Category</th>
+<th scope="col" role="columnheader" class="">Shelf</th>
+<th scope="col" role="columnheader" class="numeric">Quantity</th>
+<th scope="col" role="columnheader" class="">Description</th>
+<th scope="col" role="columnheader">Actions</th></tr></thead><tbody role="rowgroup">
+@foreach (var item in Model) { <tr role="row">
+<td role="cell" class="product-name"><span class="mobile-label" aria-hidden="true">Product</span><span><a asp-action="Details" asp-route-id="@item.Id">@item.Name</a></span></td>
+<td role="cell" class="numeric"><span class="mobile-label" aria-hidden="true">Price</span><span>@item.Price.ToString("N0")</span></td>
+<td role="cell" class=""><span class="mobile-label" aria-hidden="true">Order Date</span><span>@item.Orderdate.ToString("dd MMM yyyy")</span></td>
+<td role="cell" class=""><span class="mobile-label" aria-hidden="true">Category</span><span>@item.Category</span></td>
+<td role="cell" class=""><span class="mobile-label" aria-hidden="true">Shelf</span><span>@item.Shelf</span></td>
+<td role="cell" class="numeric"><span class="mobile-label" aria-hidden="true">Quantity</span><span>@item.Count.ToString("N0")</span></td>
+<td role="cell" class="description-cell"><span class="mobile-label" aria-hidden="true">Description</span><span>@item.Description</span></td>
+<td role="cell"><span class="mobile-label" aria-hidden="true">Actions</span><div class="row-actions"><a asp-action="Details" asp-route-id="@item.Id" aria-label="Details for @item.Name">Details</a><a asp-action="Edit" asp-route-id="@item.Id" aria-label="Edit @item.Name">Edit</a><a class="danger-link" asp-action="Delete" asp-route-id="@item.Id" aria-label="Delete @item.Name">Delete</a></div></td>
+</tr> }
+</tbody></table></div>
 }
-
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Orderdate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Category)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Shelf)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Count)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Orderdate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Category)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Shelf)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Count)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
